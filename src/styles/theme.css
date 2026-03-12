@@ -1,0 +1,177 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #faf6ef;
+  --foreground: #1e1208;
+  --card: #ffffff;
+  --card-foreground: #1e1208;
+  --popover: #ffffff;
+  --popover-foreground: #1e1208;
+  --primary: #cc2222;
+  --primary-foreground: #ffffff;
+  --secondary: #fff8e8;
+  --secondary-foreground: #1e1208;
+  --muted: #f5ede0;
+  --muted-foreground: #7a6252;
+  --accent: #ffd700;
+  --accent-foreground: #1e1208;
+  --destructive: #cc2222;
+  --destructive-foreground: #ffffff;
+  --border: #e8d8c0;
+  --input: transparent;
+  --input-background: #fdf5e8;
+  --switch-background: #cbced4;
+  --font-weight-medium: 600;
+  --font-weight-normal: 400;
+  --ring: #cc2222;
+  --chart-1: #ffd700;
+  --chart-2: #cc2222;
+  --chart-3: #e8a830;
+  --chart-4: #4a90d9;
+  --chart-5: #5cb85c;
+  --radius: 0.75rem;
+  --sidebar: #1e1208;
+  --sidebar-foreground: #fdf8f0;
+  --sidebar-primary: #cc2222;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2e1e10;
+  --sidebar-accent-foreground: #fdf8f0;
+  --sidebar-border: #3a2510;
+  --sidebar-ring: #cc2222;
+  --cafe-wood: #8b5e3c;
+  --cafe-cream: #fdf5e8;
+  --pikachu-yellow: #ffd700;
+  --pikachu-cheek: #ff6b6b;
+  --eevee-brown: #a07850;
+  --success-green: #22a85a;
+  --alert-orange: #f0a830;
+  --pokered: #cc2222;
+  --pokered-dark: #991a1a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 500;
+  }
+  html { font-size: var(--font-size); }
+  h1 { font-size: var(--text-2xl); font-weight: 800; line-height: 1.3; }
+  h2 { font-size: var(--text-xl);  font-weight: 700; line-height: 1.4; }
+  h3 { font-size: var(--text-lg);  font-weight: 700; line-height: 1.4; }
+  h4 { font-size: var(--text-base);font-weight: 600; line-height: 1.5; }
+  label  { font-size: var(--text-base); font-weight: 600; line-height: 1.5; }
+  button { font-size: var(--text-base); font-weight: 600; line-height: 1.5; }
+  input  { font-size: var(--text-base); font-weight: 400; line-height: 1.5; }
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--pokered); }
+
+@keyframes pokespin    { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pikabounce  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes pokefade    { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pokepulse   { 0%,100% { box-shadow: 0 0 0 0 rgba(204,34,34,0.25); } 50% { box-shadow: 0 0 0 8px rgba(204,34,34,0); } }
+@keyframes shimmer     { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
+@keyframes zap         { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(1.18)} }
+@keyframes slideIn     { from{transform:translateX(-12px);opacity:0} to{transform:translateX(0);opacity:1} }
+
+.animate-pokespin    { animation: pokespin 8s linear infinite; }
+.animate-pikabounce  { animation: pikabounce 2.2s ease-in-out infinite; }
+.animate-pokefade    { animation: pokefade 0.3s ease-out both; }
+.animate-pokepulse   { animation: pokepulse 2s ease infinite; }
+.animate-slideIn     { animation: slideIn 0.25s ease-out both; }
+
+.poke-card {
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+.poke-card:hover {
+  box-shadow: 0 8px 28px rgba(204,34,34,0.12), 0 2px 8px rgba(255,215,0,0.10);
+  transform: translateY(-2px);
+}
+
+.pokeball-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted-foreground);
+}
+.pokeball-divider::before,
+.pokeball-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.badge-poke {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+/* Sidebar pokeball watermark */
+.sidebar-pokeball-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg' fill='none'%3E%3Ccircle cx='40' cy='40' r='37' stroke='%23ffffff' stroke-width='2.5' stroke-opacity='0.06'/%3E%3Crect x='3' y='38' width='74' height='4' fill='%23ffffff' fill-opacity='0.06'/%3E%3Ccircle cx='40' cy='40' r='11' stroke='%23ffffff' stroke-width='2.5' stroke-opacity='0.06'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 180px;
+  background-position: -30px calc(100% + 20px);
+}
+
+/* Stat card shimmer */
+.stat-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease infinite;
+}
