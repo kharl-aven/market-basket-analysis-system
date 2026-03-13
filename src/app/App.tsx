@@ -34,7 +34,7 @@ function PokeLoader(){
 }
 
 export default function App(){
-  useEffect(()=>{ fetch("http://localhost:5000/api/reset",{method:"POST"}).catch(()=>{}); },[]);
+  useEffect(()=>{ fetch("/api/reset",{method:"POST"}).catch(()=>{}); },[]);
 
   const [activeTab,setActiveTab]             = useState("dashboard");
   const [hasDataset,setHasDataset]           = useState(false);
@@ -67,7 +67,7 @@ export default function App(){
     form.append("file",file);
 
     try {
-      const res  = await fetch("http://localhost:5000/api/upload",{method:"POST",body:form});
+      const res  = await fetch("/api/upload",{method:"POST",body:form});
       const data = await res.json();
 
       if(data.success){
@@ -82,12 +82,17 @@ export default function App(){
         setDrift(data.drift||{drift_detected:false,drift_score:0});
 
         let allFetched:any[] = newRules;
-        try {
-          const rr = await fetch("http://localhost:5000/api/rules");
-          const rd = await rr.json();
-          if(rd.rules?.length){ setAllRules(rd.rules); allFetched=rd.rules; }
-          else setAllRules(newRules);
-        } catch { setAllRules(newRules); }
+        if(data.all_rules?.length){
+          setAllRules(data.all_rules);
+          allFetched = data.all_rules;
+        } else {
+          try {
+            const rr = await fetch("/api/rules");
+            const rd = await rr.json();
+            if(rd.rules?.length){ setAllRules(rd.rules); allFetched=rd.rules; }
+            else setAllRules(newRules);
+          } catch { setAllRules(newRules); }
+        }
 
         const rowCount       = data.row_count       ?? Math.max(50,allFetched.length*12+Math.round(Math.random()*200));
         const pairedRowCount = data.paired_row_count ?? Math.round(rowCount*0.72);

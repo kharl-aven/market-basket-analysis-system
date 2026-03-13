@@ -314,7 +314,7 @@ export function InsightsTab({dynamicRecommendations,dynamicRules,hasData,onUploa
 
   useEffect(()=>{
     if(hasData){
-      fetch("http://localhost:5000/api/insights").then(r=>r.json()).then(d=>{ if(d.insights) setInsights(d.insights); }).catch(()=>{});
+      fetch("/api/insights").then(r=>r.json()).then(d=>{ if(d.insights) setInsights(d.insights); }).catch(()=>{});
     }
   },[hasData,dynamicRules]);
 

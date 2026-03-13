@@ -34,7 +34,7 @@ export function PairingsTab({dynamicRules, hasData}:{dynamicRules?:FPRule[]; has
 
   useEffect(()=>{
     if(hasData){
-      fetch("http://localhost:5000/api/rules").then(r=>r.json()).then(d=>{ if(d.rules?.length) setFetched(d.rules); }).catch(()=>{});
+      fetch("/api/rules").then(r=>r.json()).then(d=>{ if(d.rules?.length) setFetched(d.rules); }).catch(()=>{});
     }
   },[dynamicRules,hasData]);
 

@@ -109,17 +109,20 @@ class AssociationRulesPipeline:
     def _preprocess(self, df):
         """
         Preprocess transaction data into one-hot encoded format.
-        
-        Args:
-            df: DataFrame with 'Items' column
-            
-        Returns:
-            One-hot encoded DataFrame
         """
-        # Ensure there are no empty rows and split by comma
-        baskets = df['Items'].dropna().astype(str).apply(lambda x: [item.strip() for item in x.split(',') if item.strip()])
-        
-        # Use mlxtend's built-in encoder (much faster for 1000+ rows)
+        # FIX: Check if 'Items' exists, otherwise try 'Items Ordered' (common in your csv)
+        col_name = 'Items' if 'Items' in df.columns else 'Items Ordered'
+
+        if col_name not in df.columns:
+            raise ValueError(f"Required column not found. Available columns: {df.columns.tolist()}")
+
+        # Keep all rows: treat missing/blank cells as empty transactions
+        # Added .strip() to handle spaces like " Item A" vs "Item A"
+        baskets = df[col_name].fillna("").astype(str).apply(
+            lambda x: [item.strip() for item in x.split(',') if item.strip()]
+        )
+
+        # Use mlxtend's built-in encoder
         te = TransactionEncoder()
         te_ary = te.fit(baskets).transform(baskets)
         encoded = pd.DataFrame(te_ary, columns=te.columns_)

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+﻿from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
 from association_rules_pipeline import AssociationRulesPipeline
@@ -219,6 +219,17 @@ def upload_file():
     try:
         # Read the CSV from the uploaded file buffer
         df = pd.read_csv(io.StringIO(file.stream.read().decode("UTF8"), newline=None))
+
+        # Compute row counts (use same column rules as the pipeline)
+        col_name = 'Items' if 'Items' in df.columns else 'Items Ordered'
+        if col_name not in df.columns:
+            raise ValueError(f"Required column not found. Available columns: {df.columns.tolist()}")
+
+        baskets = df[col_name].fillna("").astype(str).apply(
+            lambda x: [item.strip() for item in x.split(',') if item.strip()]
+        )
+        row_count = int(len(df))
+        paired_row_count = int((baskets.apply(len) >= 2).sum())
         
         # Check if we should fit or update based on whether rules already exist
         if pipeline.rules is None or len(pipeline.rules) == 0:
@@ -241,6 +252,22 @@ def upload_file():
                     'confidence': f"{row['confidence']:.3f}",
                     'lift': float(row['lift']),
                     'leverage': float(row.get('leverage', row.get('support', 0) - (row.get('antecedent support', 0) * row.get('consequent support', 0)))), # calculate if missing
+                    'conviction': float(row.get('conviction', 1.0)),
+                    'trend': 'up' if float(row['lift']) > 2.0 else 'down'
+                })
+
+        # Full rule list for UI (avoid extra /api/rules call)
+        all_rules_list = []
+        if pipeline.rules is not None and len(pipeline.rules) > 0:
+            for idx, row in pipeline.rules.iterrows():
+                all_rules_list.append({
+                    'id': f"rule_{idx}",
+                    'antecedent': {'name': row['antecedents'], 'image': get_image_path(row['antecedents'])},
+                    'consequent': {'name': row['consequents'], 'image': get_image_path(row['consequents'])},
+                    'support': f"{row['support']:.3f}",
+                    'confidence': f"{row['confidence']:.3f}",
+                    'lift': float(row['lift']),
+                    'leverage': float(row.get('leverage', 0)),
                     'conviction': float(row.get('conviction', 1.0)),
                     'trend': 'up' if float(row['lift']) > 2.0 else 'down'
                 })
@@ -281,9 +308,12 @@ def upload_file():
         return jsonify({
             'success': True,
             'rules': rules_list,
+            'all_rules': all_rules_list,
             'drift': drift_results,
             'iteration': len(pipeline.version_history),
-            'recommendations': recommendations
+            'recommendations': recommendations,
+            'row_count': row_count,
+            'paired_row_count': paired_row_count
         })
     except Exception as e:
         traceback.print_exc()
