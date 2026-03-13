@@ -58,15 +58,14 @@ export function Header({ hasDataset, onUpload, drift, totalTransactions=0, paire
         <div className="flex items-center gap-2.5 flex-shrink-0">
           <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
             <circle cx="16" cy="16" r="15" fill="white" stroke="#cc2222" strokeWidth="1.5"/>
-            <clipPath id="h-top"><rect x="0" y="0" width="32" height="16"/></clipPath>
-            <circle cx="16" cy="16" r="15" fill="#cc2222" clipPath="url(#h-top)"/>
+            <path d="M1 16 A15 15 0 0 1 31 16 Z" fill="#cc2222"/>
             <rect x="0" y="14" width="32" height="4" fill="#1a0a0a"/>
             <circle cx="16" cy="16" r="4.5" fill="white" stroke="#1a0a0a" strokeWidth="1.5"/>
             <circle cx="16" cy="16" r="2" fill="#f5f5f5"/>
           </svg>
           <div className="hidden sm:block">
             <p className="text-sm font-black text-[var(--foreground)] leading-none">Pokémon Café</p>
-            <p className="text-[10px] text-[var(--muted-foreground)] font-bold">POS Analytics</p>
+            <p className="text-[10px] text-[var(--muted-foreground)] font-bold">Café Admin</p>
           </div>
         </div>
 
@@ -95,7 +94,7 @@ export function Header({ hasDataset, onUpload, drift, totalTransactions=0, paire
         {/* Upload btn */}
         <label className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-[var(--pokered)] text-white rounded-xl font-black text-xs shadow-md hover:bg-[var(--pokered-dark)] transition-all flex-shrink-0 active:scale-95">
           {hasDataset ? <><RefreshCw className="w-3.5 h-3.5"/>Add Data</> : <><UploadCloud className="w-3.5 h-3.5"/>Upload POS</>}
-          <input type="file" accept=".csv" className="hidden" onChange={onUpload}/>
+          <input type="file" accept=".csv,.xlsx,.xls,.tsv,.txt,.json" className="hidden" onChange={onUpload}/>
         </label>
       </header>
 

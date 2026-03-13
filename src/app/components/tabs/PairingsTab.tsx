@@ -18,8 +18,7 @@ function strengthInfo(lift:number){
 const PokeBall = () => (
   <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none">
     <circle cx="12" cy="12" r="11" fill="white" stroke="#cc2222" strokeWidth="1.5"/>
-    <clipPath id="pt-top"><rect x="0" y="0" width="24" height="12"/></clipPath>
-    <circle cx="12" cy="12" r="11" fill="#cc2222" clipPath="url(#pt-top)"/>
+    <path d="M1 12 A11 11 0 0 1 23 12 Z" fill="#cc2222"/>
     <rect x="0" y="11" width="24" height="2.5" fill="#1a0a0a"/>
     <circle cx="12" cy="12" r="3.5" fill="white" stroke="#1a0a0a" strokeWidth="1.5"/>
   </svg>

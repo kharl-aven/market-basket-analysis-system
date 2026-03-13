@@ -19,8 +19,7 @@ function PokeLoader(){
       <div className="bg-white rounded-3xl shadow-2xl border border-[var(--border)] p-10 flex flex-col items-center gap-4">
         <svg viewBox="0 0 40 40" className="w-16 h-16 animate-pokespin" fill="none">
           <circle cx="20" cy="20" r="19" fill="white" stroke="#cc2222" strokeWidth="2"/>
-          <clipPath id="pl-t"><rect x="0" y="0" width="40" height="20"/></clipPath>
-          <circle cx="20" cy="20" r="19" fill="#cc2222" clipPath="url(#pl-t)"/>
+          <path d="M1 20 A19 19 0 0 1 39 20 Z" fill="#cc2222"/>
           <rect x="0" y="18.5" width="40" height="3" fill="#1a0a0a"/>
           <circle cx="20" cy="20" r="6" fill="white" stroke="#1a0a0a" strokeWidth="2"/>
           <circle cx="20" cy="20" r="2.5" fill="#f5f5f5"/>

@@ -138,44 +138,6 @@ function DataQualityPanel({datasetLog,totalTransactions}:{datasetLog:DatasetEntr
 }
 
 /* ── Download samples card ───────────────────────────────────────────────── */
-function SampleDownloadCard(){
-  return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-[#1a0a0a] to-[#3a1010] rounded-2xl p-6 text-white shadow-xl">
-      {/* Pokeball watermark */}
-      <svg viewBox="0 0 80 80" className="absolute -right-6 -bottom-6 w-36 h-36 opacity-[0.08]" fill="none">
-        <circle cx="40" cy="40" r="37" stroke="white" strokeWidth="3"/>
-        <clipPath id="sd-t"><rect x="0" y="0" width="80" height="40"/></clipPath>
-        <circle cx="40" cy="40" r="37" fill="white" clipPath="url(#sd-t)"/>
-        <rect x="0" y="37" width="80" height="6" fill="white" opacity="0.5"/>
-        <circle cx="40" cy="40" r="12" fill="none" stroke="white" strokeWidth="4"/>
-      </svg>
-
-      <div className="relative z-10">
-        <div className="flex items-center gap-2 mb-1">
-          <Download className="w-4 h-4 text-red-300"/>
-          <p className="text-[10px] font-black text-red-300 uppercase tracking-widest">Sample POS Datasets</p>
-        </div>
-        <h3 className="text-base font-black mb-1">Test with real-format data</h3>
-        <p className="text-xs text-white/60 mb-4 max-w-sm">
-          Two quarterly POS exports in the standard format — 1,200 and 1,350 rows, with realistic ordering patterns.
-          Upload either or both to see the system in action.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <a href="/pokemon_cafe_pos_Q1_2024.csv" download
-            className="flex items-center gap-2 px-4 py-2 bg-white text-[var(--pokered)] rounded-xl font-black text-xs shadow hover:bg-yellow-50 transition-colors">
-            <Download className="w-3.5 h-3.5"/> Q1 2024 · 1,200 rows
-          </a>
-          <a href="/pokemon_cafe_pos_Q2_2024.csv" download
-            className="flex items-center gap-2 px-4 py-2 bg-white/15 text-white border border-white/25 rounded-xl font-black text-xs hover:bg-white/25 transition-colors">
-            <Download className="w-3.5 h-3.5"/> Q2 2024 · 1,350 rows
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Main ────────────────────────────────────────────────────────────────── */
 export function DatasetManagerTab({datasets, datasetLog, onUpload, onDelete, isUploading, totalTransactions, totalRules}:{
   datasets:string[]; datasetLog:DatasetEntry[]; onUpload:(e:any)=>void;
   onDelete:(id:string)=>void; isUploading:boolean; totalTransactions:number; totalRules:number;
@@ -199,7 +161,7 @@ export function DatasetManagerTab({datasets, datasetLog, onUpload, onDelete, isU
         </div>
         <label className="cursor-pointer flex items-center gap-2 px-4 py-2.5 bg-[var(--pokered)] text-white rounded-xl font-black text-sm shadow hover:bg-[var(--pokered-dark)] transition-all">
           <Plus className="w-4 h-4"/> Upload CSV
-          <input type="file" accept=".csv" className="hidden" onChange={onUpload}/>
+          <input type="file" accept=".csv,.xlsx,.xls,.tsv,.txt,.json" className="hidden" onChange={onUpload}/>
         </label>
       </div>
 
@@ -221,6 +183,13 @@ export function DatasetManagerTab({datasets, datasetLog, onUpload, onDelete, isU
       )}
 
       {/* Format guide */}
+      {/* Format pills */}
+      <div className="flex gap-2 flex-wrap">
+        {[".csv",".xlsx",".xls",".tsv",".json",".txt"].map(fmt=>(
+          <span key={fmt} className="px-2.5 py-1 bg-[var(--card)] border border-[var(--border)] rounded-lg text-[11px] font-black text-[var(--muted-foreground)]">{fmt}</span>
+        ))}
+        <span className="px-2.5 py-1 bg-[var(--pokered)]/10 border border-[var(--pokered)]/20 rounded-lg text-[11px] font-black text-[var(--pokered)]">All POS formats accepted</span>
+      </div>
       <FormatGuide/>
 
       {/* Quality panel */}
@@ -234,7 +203,7 @@ export function DatasetManagerTab({datasets, datasetLog, onUpload, onDelete, isU
           <p className="text-xs text-[var(--muted-foreground)] mb-5">Upload a POS export CSV to start discovering item pairings</p>
           <label className="cursor-pointer inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--pokered)] text-white rounded-xl font-black text-sm shadow hover:bg-[var(--pokered-dark)] transition-all">
             <UploadCloud className="w-4 h-4"/> Upload POS Export
-            <input type="file" accept=".csv" className="hidden" onChange={onUpload}/>
+            <input type="file" accept=".csv,.xlsx,.xls,.tsv,.txt,.json" className="hidden" onChange={onUpload}/>
           </label>
         </div>
       ) : (
@@ -305,7 +274,6 @@ export function DatasetManagerTab({datasets, datasetLog, onUpload, onDelete, isU
       )}
 
       {/* Sample download card */}
-      <SampleDownloadCard/>
     </div>
   );
 }
